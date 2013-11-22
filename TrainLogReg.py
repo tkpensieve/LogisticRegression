@@ -7,7 +7,7 @@ trainingFeatureFileName = "trainingFeature.dat"
 trainingLabelFileName = "trainingLabel.dat"
 modelFileName = "model.dat"
 dimensions = 785
-lambdaValue = 0.00001
+lambdaValue = 0.0001
 nIter = 1
 
 parameters = sys.argv
@@ -44,7 +44,7 @@ for i in range(len(features)):
     t += 1
     wx = sum([a*b for a,b in zip(w,features[i])])
     h = 1.0 / (1 + math.exp(-wx))
-    dwMultiplier = -(labels[i] - h) * h * (1 - h) 
+    dwMultiplier = -2 * (labels[i] - h) * h * (1 - h) 
     dw = [e*dwMultiplier for e in features[i]]
     wMultiplier = float(lambdaValue / t)
     w = [w[i] - dw[i]*wMultiplier for i in range(dimensions)]

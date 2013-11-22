@@ -4,7 +4,7 @@ import math
 
 #default values
 modelFileName = "model.dat"
-testingFeatureFileName = "testFeature.dat"
+testingFeatureFileName = "trainingFeature.dat"
 predictedLabelFileName = "predictedLabels.dat"
 
 parameters = sys.argv

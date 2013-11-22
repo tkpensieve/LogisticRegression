@@ -1,7 +1,12 @@
 import sys
 import os
 
+#default values
+predictedLabelFileName = "predictedLabels.dat"
+trueLabelFileName = "trainingLabel.dat"
+
 parameters = sys.argv
+#override with command-line parameters
 if len(parameters) > 1:
     predictedLabelFileName = parameters[1]
     trueLabelFileName = parameters[2]
