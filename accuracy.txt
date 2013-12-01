@@ -1,0 +1,7 @@
+-10		Accuracy = 0.989814
+-9		Accuracy = 0.989814
+-8		Accuracy = 0.990209
+-7		Accuracy = 0.991709
+-6		Accuracy = 0.996052
+-5		Accuracy = 0.995736
+-4		Accuracy = 0.467667

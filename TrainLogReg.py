@@ -2,17 +2,18 @@ import sys
 import os
 import math
 
-#default values
-trainingFeatureFileName = "trainingFeature.dat"
-trainingLabelFileName = "trainingLabel.dat"
-modelFileName = "model.dat"
-dimensions = 785
-lambdaValue = 0.0001
-nIter = 1
-
 parameters = sys.argv
-#override with command-line parameters
-if len(parameters) > 1:
+if len(parameters) < 7:
+    #default values
+    trainingFeatureFileName = "trainingFeature.dat"
+    trainingLabelFileName = "trainingLabel.dat"
+    modelFileName = "model.dat"
+    dimensions = 785
+    lambdaValue = 0.000001
+    nIter = 1
+    print "Usage: python TrainLogReg.py [trainingFeatureFileName] [trainingLabelFileName] [modelFileName] [D] [lambda] [Niter]"
+else:
+    #override with command-line parameters
     trainingFeatureFileName = parameters[1]
     trainingLabelFileName = parameters[2]
     modelFileName = parameters[3]
@@ -42,13 +43,14 @@ t = 0
 w = [0] * dimensions
 for i in range(len(features)):
     t += 1
-    wx = sum([a*b for a,b in zip(w,features[i])])
+    wx = sum([wi*xi for wi,xi in zip(w,features[i])])
     h = 1.0 / (1 + math.exp(-wx))
-    dwMultiplier = -2 * (labels[i] - h) * h * (1 - h) 
-    dw = [e*dwMultiplier for e in features[i]]
+    dwMultiplier = -1 * (labels[i] - h) * h * (1 - h) 
+    dw = [xi*dwMultiplier for xi in features[i]]
     wMultiplier = float(lambdaValue / t)
     w = [w[i] - dw[i]*wMultiplier for i in range(dimensions)]
 
-#write the calculated weights to the model file
+#write the calculated weights to the model file and close it
 for element in w:
     modelFile.write(str(element) + "\n")                
+modelFile.close()

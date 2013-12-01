@@ -2,17 +2,20 @@ import sys
 import os
 import math
 
-#default values
-modelFileName = "model.dat"
-testingFeatureFileName = "trainingFeature.dat"
-predictedLabelFileName = "predictedLabels.dat"
-
 parameters = sys.argv
-#override with command-line parameters
-if len(parameters) > 1:
+if len(parameters) < 5:
+    #default values
+    modelFileName = "model.dat"
+    testingFeatureFileName = "testFeature.dat" #"trainingFeature.dat"
+    predictedLabelFileName = "predictedLabel.dat"
+    dimensions = 785 
+    print "Usage: python TestLogReg.py [modelFileName] [testFeatureFileName] [predLabelFileName] [D]"
+else:
+    #override with command-line parameters
     modelFileName = parameters[1]
     testingFeatureFileName = parameters[2]
     predictedLabelFileName = parameters[3]
+    dimensions = parameters[4]
 
 #Open the specified files
 baseDirectory = os.path.dirname(os.path.realpath(__file__))
@@ -32,10 +35,12 @@ for line in modelFile:
     w.append(float(line))
 modelFile.close()
 
+#Predict the labels using the model and write the output to file
 for i in range(len(features)):
-    wx = sum([a*b for a,b in zip(w,features[i])])
-    sig = (1.0 / (1 + math.exp(-wx)))
+    wx = sum([wi*xi for wi,xi in zip(w,features[i])])
+    sig = 1.0 / (1 + math.exp(-wx))
     if sig > 0.5:
         predictedLabelFile.write("1\n")
     else:
-        predictedLabelFile.write("0\n")        
+        predictedLabelFile.write("0\n")
+predictedLabelFile.close()        
